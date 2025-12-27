@@ -323,53 +323,6 @@ function StepBox({ number, content, color = colors.primary }: {
   );
 }
 
-// Module Card Component
-function ModuleCard({ name, description, color }: { name: string; description: string; color: string }) {
-  return (
-    <Box style={{
-      background: `${color}10`,
-      border: `1px solid ${color}30`,
-      borderRadius: borderRadius.md,
-      padding: '10px 12px',
-    }}>
-      <Text style={{ fontFamily: fonts.code, fontSize: '14px', color, fontWeight: 600, marginBottom: '2px' }}>{name}</Text>
-      <Text style={{ fontSize: '13px', color: colors.textSecondary }}>{description}</Text>
-    </Box>
-  );
-}
-
-// Table Component
-function DataTable({ headers, rows }: { headers: string[]; rows: string[][] }) {
-  return (
-    <Box style={{
-      background: 'rgba(15, 29, 50, 0.6)',
-      border: '1px solid rgba(255, 255, 255, 0.1)',
-      borderRadius: borderRadius.md,
-      overflow: 'hidden',
-    }}>
-      <FlexBox style={{
-        background: 'rgba(77, 162, 255, 0.15)',
-        padding: '8px 12px',
-        gap: '8px',
-      }}>
-        {headers.map((h, i) => (
-          <Text key={i} style={{ flex: 1, fontSize: '14px', fontWeight: 600, color: colors.primary }}>{h}</Text>
-        ))}
-      </FlexBox>
-      {rows.map((row, i) => (
-        <FlexBox key={i} style={{
-          padding: '8px 12px',
-          gap: '8px',
-          borderTop: '1px solid rgba(255, 255, 255, 0.05)',
-        }}>
-          {row.map((cell, j) => (
-            <Text key={j} style={{ flex: 1, fontSize: '13px', color: colors.textSecondary }}>{cell}</Text>
-          ))}
-        </FlexBox>
-      ))}
-    </Box>
-  );
-}
 
 // Fullscreen wrapper - applies CSS for viewport-filling slides
 function FullscreenDeck({ children }: { children: React.ReactNode }) {
@@ -1001,41 +954,60 @@ export function DEXFundamentalsPresentation() {
         {/* ==================== SLIDE 13: Impermanent Loss ==================== */}
         <Slide backgroundColor="tertiary">
           <FlexBox height="100%" flexDirection="column" justifyContent="center" alignItems="center">
-            <Heading fontSize="40px" style={{ marginBottom: '32px', fontWeight: 700 }}>Impermanent Loss</Heading>
-            <FlexBox style={{ gap: '24px' }}>
+            <Heading fontSize="48px" style={{ marginBottom: '40px', fontWeight: 700 }}>Impermanent Loss</Heading>
+            <FlexBox style={{ gap: '40px', maxWidth: '1100px', width: '100%' }}>
               <Box style={{ flex: 1 }}>
                 <Box style={{
                   background: 'rgba(139, 92, 246, 0.1)',
                   border: '1px solid rgba(139, 92, 246, 0.3)',
                   borderRadius: borderRadius.lg,
-                  padding: '16px',
-                  marginBottom: '16px',
+                  padding: '24px',
+                  marginBottom: '20px',
                 }}>
-                  <Text style={{ fontSize: '16px', color: colors.textSecondary, marginBottom: '8px' }}>Formula:</Text>
+                  <Text style={{ fontSize: '18px', color: colors.textSecondary, marginBottom: '12px' }}>Formula:</Text>
                   <Box style={{
                     background: 'rgba(0,0,0,0.3)',
                     borderRadius: borderRadius.sm,
-                    padding: '10px',
+                    padding: '14px',
                   }}>
-                    <Text style={{ fontFamily: fonts.code, fontSize: '16px', color: colors.chartPurple }}>
+                    <Text style={{ fontFamily: fonts.code, fontSize: '18px', color: colors.chartPurple }}>
                       IL = 2√(price ratio) / (1 + price ratio) - 1
                     </Text>
                   </Box>
                 </Box>
-                <Text style={{ fontSize: '14px', color: colors.textMuted, lineHeight: 1.6 }}>
+                <Text style={{ fontSize: '16px', color: colors.textMuted, lineHeight: 1.6 }}>
                   IL becomes permanent only when withdrawing at a different price ratio than when depositing.
                 </Text>
               </Box>
               <Box style={{ flex: 1 }}>
-                <DataTable
-                  headers={['Price Change', 'IL']}
-                  rows={[
+                <Box style={{
+                  background: 'rgba(15, 29, 50, 0.6)',
+                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                  borderRadius: borderRadius.md,
+                  overflow: 'hidden',
+                }}>
+                  <FlexBox style={{
+                    background: 'rgba(77, 162, 255, 0.15)',
+                    padding: '12px 20px',
+                  }}>
+                    <Text style={{ flex: 1, fontSize: '16px', fontWeight: 600, color: colors.primary }}>Price Change</Text>
+                    <Text style={{ flex: 1, fontSize: '16px', fontWeight: 600, color: colors.primary }}>IL</Text>
+                  </FlexBox>
+                  {[
                     ['1.25x (25% up)', '0.6%'],
                     ['1.5x (50% up)', '2.0%'],
                     ['2x (100% up)', '5.7%'],
                     ['5x (400% up)', '25.5%'],
-                  ]}
-                />
+                  ].map((row, i) => (
+                    <FlexBox key={i} style={{
+                      padding: '12px 20px',
+                      borderTop: '1px solid rgba(255, 255, 255, 0.05)',
+                    }}>
+                      <Text style={{ flex: 1, fontSize: '16px', color: colors.textSecondary }}>{row[0]}</Text>
+                      <Text style={{ flex: 1, fontSize: '16px', color: colors.warning, fontWeight: 600 }}>{row[1]}</Text>
+                    </FlexBox>
+                  ))}
+                </Box>
               </Box>
             </FlexBox>
           </FlexBox>
@@ -1073,39 +1045,57 @@ export function DEXFundamentalsPresentation() {
         {/* ==================== SLIDE 15: Move Language Basics ==================== */}
         <Slide backgroundColor="tertiary">
           <FlexBox height="100%" flexDirection="column" justifyContent="center" alignItems="center">
-            <Heading fontSize="40px" style={{ marginBottom: '32px', fontWeight: 700 }}>Move Language Basics</Heading>
-            <FlexBox style={{ gap: '20px' }}>
+            <Heading fontSize="48px" style={{ marginBottom: '48px', fontWeight: 700 }}>Move Language Basics</Heading>
+            <FlexBox style={{ gap: '48px', maxWidth: '1100px', width: '100%' }}>
               <Box style={{ flex: 1 }}>
-                <Text style={{ fontSize: '17px', fontWeight: 600, color: colors.success, marginBottom: '12px' }}>
-                  Why Move for DEX?
-                </Text>
-                <Box style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  {[
-                    'Resource-oriented programming',
-                    'Linear types prevent double-spending',
-                    'Built-in safety guarantees',
-                    'Native support for digital assets',
-                  ].map((item, i) => (
-                    <FlexBox key={i} alignItems="center" style={{ gap: '8px' }}>
-                      <Text style={{ color: colors.success }}>✓</Text>
-                      <Text style={{ fontSize: '14px', color: colors.textSecondary }}>{item}</Text>
-                    </FlexBox>
-                  ))}
+                <Box style={{
+                  background: 'rgba(16, 185, 129, 0.1)',
+                  border: '1px solid rgba(16, 185, 129, 0.3)',
+                  borderRadius: borderRadius.lg,
+                  padding: '28px',
+                }}>
+                  <Text style={{ fontSize: '22px', fontWeight: 600, color: colors.success, marginBottom: '20px' }}>
+                    Why Move for DEX?
+                  </Text>
+                  <Box style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                    {[
+                      'Resource-oriented programming',
+                      'Linear types prevent double-spending',
+                      'Built-in safety guarantees',
+                      'Native support for digital assets',
+                    ].map((item, i) => (
+                      <FlexBox key={i} alignItems="center" style={{ gap: '12px' }}>
+                        <Text style={{ color: colors.success, fontSize: '20px' }}>✓</Text>
+                        <Text style={{ fontSize: '18px', color: colors.textSecondary }}>{item}</Text>
+                      </FlexBox>
+                    ))}
+                  </Box>
                 </Box>
               </Box>
               <Box style={{ flex: 1 }}>
-                <Text style={{ fontSize: '17px', fontWeight: 600, color: colors.primary, marginBottom: '12px' }}>
-                  Move vs Solidity:
-                </Text>
-                <DataTable
-                  headers={['Feature', 'Move Advantage']}
-                  rows={[
-                    ['Resources', "Assets can't be copied/dropped"],
-                    ['Generics', 'Type-safe coin operations'],
-                    ['Abilities', 'copy, drop, store, key'],
-                    ['Reentrancy', 'Prevented by design'],
-                  ]}
-                />
+                <Box style={{
+                  background: 'rgba(77, 162, 255, 0.1)',
+                  border: '1px solid rgba(77, 162, 255, 0.3)',
+                  borderRadius: borderRadius.lg,
+                  padding: '28px',
+                }}>
+                  <Text style={{ fontSize: '22px', fontWeight: 600, color: colors.primary, marginBottom: '20px' }}>
+                    Move vs Solidity
+                  </Text>
+                  <Box style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                    {[
+                      { feature: 'Resources', desc: "Assets can't be copied/dropped" },
+                      { feature: 'Generics', desc: 'Type-safe coin operations' },
+                      { feature: 'Abilities', desc: 'copy, drop, store, key' },
+                      { feature: 'Reentrancy', desc: 'Prevented by design' },
+                    ].map((item, i) => (
+                      <FlexBox key={i} style={{ gap: '12px' }}>
+                        <Text style={{ fontSize: '18px', color: colors.primary, fontWeight: 600, minWidth: '100px' }}>{item.feature}</Text>
+                        <Text style={{ fontSize: '18px', color: colors.textSecondary }}>{item.desc}</Text>
+                      </FlexBox>
+                    ))}
+                  </Box>
+                </Box>
               </Box>
             </FlexBox>
           </FlexBox>
@@ -1114,38 +1104,38 @@ export function DEXFundamentalsPresentation() {
         {/* ==================== SLIDE 16: Sui DEX Architecture ==================== */}
         <Slide backgroundColor="tertiary">
           <FlexBox height="100%" flexDirection="column" justifyContent="center" alignItems="center">
-            <Heading fontSize="40px" style={{ marginBottom: '32px', fontWeight: 700 }}>Sui DEX Architecture</Heading>
-            <FlexBox justifyContent="center">
-              <svg viewBox="0 0 400 280" style={{ width: '100%', maxWidth: '400px' }}>
+            <Heading fontSize="48px" style={{ marginBottom: '40px', fontWeight: 700 }}>Sui DEX Architecture</Heading>
+            <FlexBox justifyContent="center" style={{ width: '100%', maxWidth: '700px' }}>
+              <svg viewBox="0 0 500 320" style={{ width: '100%' }}>
                 {/* Frontend */}
-                <rect x="120" y="20" width="160" height="40" rx="8" fill={colors.chartPurple} opacity="0.8" />
-                <text x="200" y="45" fill="#fff" fontSize="12" textAnchor="middle">Frontend (React/TS)</text>
+                <rect x="150" y="20" width="200" height="50" rx="10" fill={colors.chartPurple} opacity="0.9" />
+                <text x="250" y="52" fill="#fff" fontSize="16" textAnchor="middle" fontWeight="600">Frontend (React/TS)</text>
 
                 {/* Arrow */}
-                <path d="M200 60 L200 90" stroke={colors.textSecondary} strokeWidth="2" markerEnd="url(#arrowhead2)" />
+                <path d="M250 70 L250 110" stroke={colors.textSecondary} strokeWidth="3" markerEnd="url(#arrowhead2)" />
 
                 {/* PTB */}
-                <rect x="100" y="95" width="200" height="40" rx="8" fill={colors.warning} opacity="0.8" />
-                <text x="200" y="120" fill="#fff" fontSize="11" textAnchor="middle">PTB (Programmable Transaction Block)</text>
+                <rect x="100" y="115" width="300" height="50" rx="10" fill={colors.warning} opacity="0.9" />
+                <text x="250" y="147" fill="#fff" fontSize="15" textAnchor="middle" fontWeight="600">PTB (Programmable Transaction Block)</text>
 
                 {/* Arrow */}
-                <path d="M200 135 L200 165" stroke={colors.textSecondary} strokeWidth="2" markerEnd="url(#arrowhead2)" />
+                <path d="M250 165 L250 205" stroke={colors.textSecondary} strokeWidth="3" markerEnd="url(#arrowhead2)" />
 
                 {/* Modules */}
-                <rect x="50" y="170" width="80" height="35" rx="6" fill={colors.primary} opacity="0.8" />
-                <text x="90" y="192" fill="#fff" fontSize="10" textAnchor="middle">Pool</text>
+                <rect x="40" y="210" width="120" height="45" rx="8" fill={colors.primary} opacity="0.9" />
+                <text x="100" y="240" fill="#fff" fontSize="14" textAnchor="middle" fontWeight="600">Pool</text>
 
-                <rect x="160" y="170" width="80" height="35" rx="6" fill={colors.success} opacity="0.8" />
-                <text x="200" y="192" fill="#fff" fontSize="10" textAnchor="middle">LP Token</text>
+                <rect x="190" y="210" width="120" height="45" rx="8" fill={colors.success} opacity="0.9" />
+                <text x="250" y="240" fill="#fff" fontSize="14" textAnchor="middle" fontWeight="600">LP Token</text>
 
-                <rect x="270" y="170" width="80" height="35" rx="6" fill={colors.chartPink} opacity="0.8" />
-                <text x="310" y="192" fill="#fff" fontSize="10" textAnchor="middle">Swap</text>
+                <rect x="340" y="210" width="120" height="45" rx="8" fill={colors.chartPink} opacity="0.9" />
+                <text x="400" y="240" fill="#fff" fontSize="14" textAnchor="middle" fontWeight="600">Swap</text>
 
                 {/* PTB explanation */}
-                <text x="200" y="240" fill={colors.textSecondary} fontSize="10" textAnchor="middle">
+                <text x="250" y="285" fill={colors.textSecondary} fontSize="14" textAnchor="middle">
                   PTB chains calls atomically:
                 </text>
-                <text x="200" y="255" fill={colors.primary} fontSize="10" textAnchor="middle" fontFamily="monospace">
+                <text x="250" y="308" fill={colors.primary} fontSize="14" textAnchor="middle" fontFamily="monospace">
                   swap() → swap() → transfer()
                 </text>
 
@@ -1162,24 +1152,38 @@ export function DEXFundamentalsPresentation() {
         {/* ==================== SLIDE 17: Module Structure ==================== */}
         <Slide backgroundColor="tertiary">
           <FlexBox height="100%" flexDirection="column" justifyContent="center" alignItems="center">
-            <Heading fontSize="40px" style={{ marginBottom: '32px', fontWeight: 700 }}>Module Structure</Heading>
-            <FlexBox style={{ gap: '12px' }} flexWrap="wrap">
-              <ModuleCard name="dex::pool" description="Pool creation & reserves" color={colors.primary} />
-              <ModuleCard name="dex::swap" description="Token swap logic" color={colors.success} />
-              <ModuleCard name="dex::liquidity" description="Add/remove liquidity" color={colors.warning} />
-              <ModuleCard name="dex::lp_token" description="LP token mint/burn" color={colors.chartPurple} />
-              <ModuleCard name="dex::math" description="AMM calculations" color={colors.chartPink} />
-              <ModuleCard name="dex::events" description="Emit swap/LP events" color={colors.chartCyan} />
+            <Heading fontSize="48px" style={{ marginBottom: '48px', fontWeight: 700 }}>Module Structure</Heading>
+            <FlexBox style={{ gap: '20px', maxWidth: '1100px', justifyContent: 'center' }} flexWrap="wrap">
+              {[
+                { name: 'dex::pool', desc: 'Pool creation & reserves', color: colors.primary },
+                { name: 'dex::swap', desc: 'Token swap logic', color: colors.success },
+                { name: 'dex::liquidity', desc: 'Add/remove liquidity', color: colors.warning },
+                { name: 'dex::lp_token', desc: 'LP token mint/burn', color: colors.chartPurple },
+                { name: 'dex::registry', desc: 'Pool lookup & management', color: colors.error },
+                { name: 'dex::math', desc: 'AMM calculations', color: colors.chartPink },
+                { name: 'dex::events', desc: 'Emit swap/LP events', color: colors.chartCyan },
+              ].map((mod, i) => (
+                <Box key={i} style={{
+                  background: `${mod.color}15`,
+                  border: `2px solid ${mod.color}50`,
+                  borderRadius: borderRadius.lg,
+                  padding: '20px 28px',
+                  minWidth: '280px',
+                }}>
+                  <Text style={{ fontFamily: fonts.code, fontSize: '20px', color: mod.color, fontWeight: 600, marginBottom: '8px' }}>{mod.name}</Text>
+                  <Text style={{ fontSize: '16px', color: colors.textSecondary }}>{mod.desc}</Text>
+                </Box>
+              ))}
             </FlexBox>
             <Box style={{
-              background: 'rgba(16, 185, 129, 0.1)',
-              border: '1px solid rgba(16, 185, 129, 0.2)',
-              borderRadius: borderRadius.md,
-              padding: '12px',
-              marginTop: '20px',
+              background: 'rgba(16, 185, 129, 0.15)',
+              border: '2px solid rgba(16, 185, 129, 0.4)',
+              borderRadius: borderRadius.lg,
+              padding: '16px 32px',
+              marginTop: '36px',
               textAlign: 'center',
             }}>
-              <Text style={{ fontSize: '16px', color: colors.success }}>
+              <Text style={{ fontSize: '20px', color: colors.success, fontWeight: 600 }}>
                 💡 No router needed — Sui PTBs handle composability!
               </Text>
             </Box>
@@ -1189,76 +1193,143 @@ export function DEXFundamentalsPresentation() {
         {/* ==================== SLIDE 18: Object Design Patterns ==================== */}
         <Slide backgroundColor="tertiary">
           <FlexBox height="100%" flexDirection="column" justifyContent="center" alignItems="center">
-            <Heading fontSize="40px" style={{ marginBottom: '32px', fontWeight: 700 }}>Object Design Patterns</Heading>
-            <DataTable
-              headers={['Pattern', 'Description']}
-              rows={[
-                ['Multiple Pool Objects', 'Parallel tx execution, higher throughput'],
-                ['Shared vs Owned', 'Shared Pool (anyone swaps), Owned LP (fast transfers)'],
-                ['Centralized Registry', 'On-chain pool lookup, prevent duplicates'],
-                ['Phantom Types <X, Y>', 'Compile-time type safety'],
-              ]}
-            />
+            <Heading fontSize="48px" style={{ marginBottom: '48px', fontWeight: 700 }}>Object Design Patterns</Heading>
+            <Box style={{ maxWidth: '900px', width: '100%' }}>
+              {[
+                { pattern: 'Multiple Pool Objects', desc: 'Parallel tx execution, higher throughput', color: colors.primary },
+                { pattern: 'Shared vs Owned', desc: 'Shared Pool (anyone swaps), Owned LP (fast transfers)', color: colors.success },
+                { pattern: 'Centralized Registry', desc: 'On-chain pool lookup, prevent duplicates', color: colors.warning },
+                { pattern: 'Phantom Types <X, Y>', desc: 'Compile-time type safety', color: colors.chartPurple },
+              ].map((item, i) => (
+                <Box key={i} style={{
+                  background: `${item.color}10`,
+                  border: `1px solid ${item.color}30`,
+                  borderRadius: borderRadius.md,
+                  padding: '20px 28px',
+                  marginBottom: '16px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '24px',
+                }}>
+                  <Text style={{ fontSize: '20px', fontWeight: 600, color: item.color, minWidth: '280px' }}>{item.pattern}</Text>
+                  <Text style={{ fontSize: '18px', color: colors.textSecondary }}>{item.desc}</Text>
+                </Box>
+              ))}
+            </Box>
           </FlexBox>
         </Slide>
 
         {/* ==================== SLIDE 19: Core Structs ==================== */}
         <Slide backgroundColor="tertiary">
           <FlexBox height="100%" flexDirection="column" justifyContent="center" alignItems="center">
-            <Heading fontSize="40px" style={{ marginBottom: '32px', fontWeight: 700 }}>Core Structs (Types)</Heading>
-            <Box style={{ fontSize: '14px', width: '100%' }}>
-              <CodePane language="rust" showLineNumbers>
-                {`// Pool object
-struct Pool<phantom X, phantom Y> has key, store {
+            <Heading fontSize="48px" style={{ marginBottom: '32px', fontWeight: 700 }}>Core Structs (Types)</Heading>
+            <FlexBox style={{ gap: '24px', width: '100%', maxWidth: '1100px' }}>
+              <Box style={{ fontSize: '14px', flex: 1 }}>
+                <CodePane language="rust" showLineNumbers>
+                  {`/// AMM Pool holding two token reserves
+public struct Pool<phantom X, phantom Y> has key, store {
     id: UID,
     balance_x: Balance<X>,
     balance_y: Balance<Y>,
-    lp_supply: Supply<LP<X,Y>>,
-    fee_bps: u64,
+    lp_supply: Supply<LP<X, Y>>,
+    fee_bps: u64,  // 30 = 0.3%
 }
 
-// LP Token
-struct LP<phantom X, phantom Y> has drop {}
+/// LP Token with phantom types
+public struct LP<phantom X, phantom Y> has drop {}
 
-// Registry
-struct Registry has key {
+/// Admin capability
+public struct AdminCap has key, store { id: UID }`}
+                </CodePane>
+              </Box>
+              <Box style={{ fontSize: '14px', flex: 1 }}>
+                <CodePane language="rust" showLineNumbers>
+                  {`/// Centralized registry for pool lookup
+public struct Registry has key {
     id: UID,
-    pools: Table<TypeName, ID>,
+    pools: Table<PoolKey, PoolInfo>,
+    pool_count: u64,
 }
 
-// Admin capability
-struct AdminCap has key, store { id: UID }`}
-              </CodePane>
-            </Box>
+/// Key for pool lookup (sorted pair)
+public struct PoolKey has copy, drop, store {
+    type_x: TypeName,
+    type_y: TypeName,
+}
+
+/// Pool information
+public struct PoolInfo has copy, drop, store {
+    pool_id: ID,
+    created_at: u64,
+    is_active: bool,
+}`}
+                </CodePane>
+              </Box>
+            </FlexBox>
+            <FlexBox style={{ gap: '20px', marginTop: '24px', maxWidth: '1100px' }}>
+              <Box style={{
+                background: 'rgba(77, 162, 255, 0.1)',
+                border: '1px solid rgba(77, 162, 255, 0.3)',
+                borderRadius: borderRadius.md,
+                padding: '12px 20px',
+                flex: 1,
+              }}>
+                <Text style={{ fontSize: '16px', color: colors.primary, fontWeight: 600 }}>phantom X, Y</Text>
+                <Text style={{ fontSize: '14px', color: colors.textSecondary, marginTop: '4px' }}>Type safety without storage cost</Text>
+              </Box>
+              <Box style={{
+                background: 'rgba(16, 185, 129, 0.1)',
+                border: '1px solid rgba(16, 185, 129, 0.3)',
+                borderRadius: borderRadius.md,
+                padding: '12px 20px',
+                flex: 1,
+              }}>
+                <Text style={{ fontSize: '16px', color: colors.success, fontWeight: 600 }}>key, store</Text>
+                <Text style={{ fontSize: '14px', color: colors.textSecondary, marginTop: '4px' }}>Can be stored and has UID</Text>
+              </Box>
+              <Box style={{
+                background: 'rgba(239, 68, 68, 0.1)',
+                border: '1px solid rgba(239, 68, 68, 0.3)',
+                borderRadius: borderRadius.md,
+                padding: '12px 20px',
+                flex: 1,
+              }}>
+                <Text style={{ fontSize: '16px', color: colors.error, fontWeight: 600 }}>Registry</Text>
+                <Text style={{ fontSize: '14px', color: colors.textSecondary, marginTop: '4px' }}>On-chain pool lookup</Text>
+              </Box>
+            </FlexBox>
           </FlexBox>
         </Slide>
 
         {/* ==================== SLIDE 20: Add Liquidity Code ==================== */}
         <Slide backgroundColor="tertiary">
           <FlexBox height="100%" flexDirection="column" justifyContent="center" alignItems="center">
-            <Heading fontSize="40px" style={{ marginBottom: '32px', fontWeight: 700 }}>Add Liquidity (Move Code)</Heading>
-            <Box style={{ fontSize: '13px', width: '100%' }}>
+            <Heading fontSize="48px" style={{ marginBottom: '36px', fontWeight: 700 }}>Add Liquidity (Move Code)</Heading>
+            <Box style={{ fontSize: '15px', width: '100%', maxWidth: '950px' }}>
               <CodePane language="rust" showLineNumbers>
                 {`public fun add_liquidity<X, Y>(
     pool: &mut Pool<X, Y>,
     coin_x: Coin<X>,
     coin_y: Coin<Y>,
-    ctx: &mut TxContext
+    ctx: &mut TxContext,
 ): Coin<LP<X, Y>> {
+    let amount_x = coin::value(&coin_x);
+    let amount_y = coin::value(&coin_y);
+    let lp_supply = pool::get_lp_supply(pool);
+
     let lp_amount = if (lp_supply == 0) {
-        // Initial: geometric mean
-        math::sqrt(amount_x * amount_y)
+        // Initial: LP = sqrt(x * y) - MINIMUM_LIQUIDITY
+        math::calculate_initial_lp(amount_x, amount_y) - 1000
     } else {
-        // Proportional to smaller ratio
-        math::min(
-            amount_x * lp_supply / pool.reserve_x,
-            amount_y * lp_supply / pool.reserve_y
-        )
+        // Proportional: LP = min(dx/x, dy/y) * total_lp
+        math::calculate_subsequent_lp(amount_x, amount_y, ...)
     };
-    // Add to reserves and mint LP tokens
+
+    // Add to reserves & mint LP tokens
+    balance::join(pool::borrow_balance_x_mut(pool), coin::into_balance(coin_x));
+    balance::join(pool::borrow_balance_y_mut(pool), coin::into_balance(coin_y));
     coin::from_balance(
-        balance::increase_supply(&mut pool.lp_supply, lp_amount),
-        ctx
+        balance::increase_supply(pool::borrow_lp_supply_mut(pool), lp_amount), ctx
     )
 }`}
               </CodePane>
@@ -1269,26 +1340,31 @@ struct AdminCap has key, store { id: UID }`}
         {/* ==================== SLIDE 21: Swap Function Code ==================== */}
         <Slide backgroundColor="tertiary">
           <FlexBox height="100%" flexDirection="column" justifyContent="center" alignItems="center">
-            <Heading fontSize="40px" style={{ marginBottom: '32px', fontWeight: 700 }}>Swap Function (Move Code)</Heading>
-            <Box style={{ fontSize: '13px', width: '100%' }}>
+            <Heading fontSize="48px" style={{ marginBottom: '36px', fontWeight: 700 }}>Swap Function (Move Code)</Heading>
+            <Box style={{ fontSize: '15px', width: '100%', maxWidth: '950px' }}>
               <CodePane language="rust" showLineNumbers>
                 {`public fun swap_x_to_y<X, Y>(
     pool: &mut Pool<X, Y>,
     coin_in: Coin<X>,
     min_out: u64,
-    ctx: &mut TxContext
+    ctx: &mut TxContext,
 ): Coin<Y> {
-    // Calculate output with 0.3% fee (997/1000)
-    let amount_out = (amount_in * 997 * pool.reserve_y)
-                   / (pool.reserve_x * 1000 + amount_in * 997);
+    let amount_in = coin::value(&coin_in);
+    let (reserve_x, reserve_y) = pool::get_reserves(pool);
+    let fee_bps = pool::get_fee_bps(pool);
+
+    // Calculate output: dy = (dx * (10000-fee) * y) / (x*10000 + dx*(10000-fee))
+    let amount_out = math::calculate_swap_output(
+        amount_in, reserve_x, reserve_y, fee_bps
+    );
 
     // Slippage protection
     assert!(amount_out >= min_out, E_SLIPPAGE_EXCEEDED);
 
-    // Return output coin
+    // Add input, remove output
+    balance::join(pool::borrow_balance_x_mut(pool), coin::into_balance(coin_in));
     coin::from_balance(
-        balance::split(&mut pool.balance_y, amount_out),
-        ctx
+        balance::split(pool::borrow_balance_y_mut(pool), amount_out), ctx
     )
 }`}
               </CodePane>
@@ -1299,114 +1375,220 @@ struct AdminCap has key, store { id: UID }`}
         {/* ==================== SLIDE 22: PTB Composability ==================== */}
         <Slide backgroundColor="tertiary">
           <FlexBox height="100%" flexDirection="column" justifyContent="center" alignItems="center">
-            <Heading fontSize="40px" style={{ marginBottom: '32px', fontWeight: 700 }}>PTB Composability</Heading>
-            <Text style={{ fontSize: '16px', color: colors.textSecondary, marginBottom: '12px' }}>
+            <Heading fontSize="48px" style={{ marginBottom: '24px', fontWeight: 700 }}>PTB Composability</Heading>
+            <Text style={{ fontSize: '20px', color: colors.textSecondary, marginBottom: '24px' }}>
               Multi-hop swap example (TypeScript):
             </Text>
-            <Box style={{ fontSize: '13px', width: '100%' }}>
+            <Box style={{ fontSize: '15px', width: '100%', maxWidth: '950px' }}>
               <CodePane language="typescript" showLineNumbers>
                 {`const tx = new Transaction();
 
 // Swap 1: SUI -> USDC
 const [usdcCoin] = tx.moveCall({
-  target: \`\${PKG}::dex::swap\`,
-  arguments: [suiCoin, pool1, minUsdc],
+  target: \`\${PKG}::swap::swap_x_to_y\`,
+  typeArguments: [SUI_TYPE, USDC_TYPE],
+  arguments: [pool1, suiCoin, tx.pure.u64(minUsdc)],
 });
 
-// Swap 2: USDC -> USDT (chain output!)
+// Swap 2: USDC -> USDT (chain output from swap 1!)
 const [usdtCoin] = tx.moveCall({
-  target: \`\${PKG}::dex::swap\`,
-  arguments: [usdcCoin, pool2, minUsdt], // Uses output from swap 1!
+  target: \`\${PKG}::swap::swap_x_to_y\`,
+  typeArguments: [USDC_TYPE, USDT_TYPE],
+  arguments: [pool2, usdcCoin, tx.pure.u64(minUsdt)],
 });
 
 // Transfer result to sender
 tx.transferObjects([usdtCoin], sender);
 
-// All in one atomic transaction!`}
+// All in one atomic transaction - no router needed!`}
               </CodePane>
+            </Box>
+            <Box style={{
+              background: 'rgba(16, 185, 129, 0.15)',
+              border: '2px solid rgba(16, 185, 129, 0.4)',
+              borderRadius: borderRadius.lg,
+              padding: '16px 32px',
+              marginTop: '28px',
+            }}>
+              <Text style={{ fontSize: '18px', color: colors.success, fontWeight: 600 }}>
+                💡 PTB chains calls atomically — no router contract needed!
+              </Text>
             </Box>
           </FlexBox>
         </Slide>
 
-        {/* ==================== SLIDE 23: Security Patterns ==================== */}
+        {/* ==================== SLIDE 23: Query Registry with SuiClient ==================== */}
         <Slide backgroundColor="tertiary">
           <FlexBox height="100%" flexDirection="column" justifyContent="center" alignItems="center">
-            <Heading fontSize="40px" style={{ marginBottom: '32px', fontWeight: 700 }}>Security Patterns</Heading>
-            <DataTable
-              headers={['Pattern', 'Description']}
-              rows={[
-                ['No Reentrancy', "Move's linear types prevent by design"],
-                ['Access Control', 'public fun admin_fn(cap: &AdminCap)'],
-                ['Integer Overflow', 'Move aborts, use u128 for calculations'],
-                ['Input Validation', 'assert!(amount > 0, E_ZERO_AMOUNT)'],
-              ]}
-            />
+            <Heading fontSize="48px" style={{ marginBottom: '24px', fontWeight: 700 }}>Query Registry with SuiClient</Heading>
+            <Text style={{ fontSize: '18px', color: colors.textSecondary, marginBottom: '24px' }}>
+              Fetch all pool information from the on-chain Registry:
+            </Text>
+            <Box style={{ fontSize: '14px', width: '100%', maxWidth: '1000px' }}>
+              <CodePane language="typescript" showLineNumbers>
+                {`import { SuiClient, getFullnodeUrl } from '@mysten/sui/client';
+
+const client = new SuiClient({ url: getFullnodeUrl('mainnet') });
+
+// Get Registry object with all pool data
+async function getAllPools(registryId: string) {
+  const registry = await client.getObject({
+    id: registryId,
+    options: { showContent: true },
+  });
+
+  // Access dynamic fields (pools table)
+  const pools = await client.getDynamicFields({
+    parentId: registryId,
+  });
+
+  // Fetch each pool's info
+  const poolInfos = await Promise.all(
+    pools.data.map(async (field) => {
+      const poolData = await client.getDynamicFieldObject({
+        parentId: registryId,
+        name: field.name,
+      });
+      return poolData;
+    })
+  );
+
+  return { registry, pools: poolInfos };
+}
+
+// Usage
+const { registry, pools } = await getAllPools(REGISTRY_ID);
+console.log(\`Found \${pools.length} pools\`);`}
+              </CodePane>
+            </Box>
+            <FlexBox style={{ gap: '20px', marginTop: '24px', maxWidth: '1000px', flexWrap: 'wrap', justifyContent: 'center' }}>
+              <Box style={{
+                background: 'rgba(77, 162, 255, 0.1)',
+                border: '1px solid rgba(77, 162, 255, 0.3)',
+                borderRadius: borderRadius.md,
+                padding: '12px 20px',
+              }}>
+                <Text style={{ fontSize: '16px', color: colors.primary, fontWeight: 500 }}>getObject() - Fetch Registry</Text>
+              </Box>
+              <Box style={{
+                background: 'rgba(16, 185, 129, 0.1)',
+                border: '1px solid rgba(16, 185, 129, 0.3)',
+                borderRadius: borderRadius.md,
+                padding: '12px 20px',
+              }}>
+                <Text style={{ fontSize: '16px', color: colors.success, fontWeight: 500 }}>getDynamicFields() - List Pools</Text>
+              </Box>
+              <Box style={{
+                background: 'rgba(239, 68, 68, 0.1)',
+                border: '1px solid rgba(239, 68, 68, 0.3)',
+                borderRadius: borderRadius.md,
+                padding: '12px 20px',
+              }}>
+                <Text style={{ fontSize: '16px', color: colors.error, fontWeight: 500 }}>getDynamicFieldObject() - Pool Info</Text>
+              </Box>
+            </FlexBox>
+          </FlexBox>
+        </Slide>
+
+        {/* ==================== SLIDE 24: Security Patterns ==================== */}
+        <Slide backgroundColor="tertiary">
+          <FlexBox height="100%" flexDirection="column" justifyContent="center" alignItems="center">
+            <Heading fontSize="48px" style={{ marginBottom: '48px', fontWeight: 700 }}>Security Patterns</Heading>
+            <Box style={{ maxWidth: '900px', width: '100%' }}>
+              {[
+                { pattern: 'No Reentrancy', desc: "Move's linear types prevent by design", color: colors.success, icon: '🛡️' },
+                { pattern: 'Access Control', desc: 'public fun admin_fn(cap: &AdminCap)', color: colors.primary, icon: '🔐' },
+                { pattern: 'Integer Overflow', desc: 'Move aborts on overflow, use u128 for calculations', color: colors.warning, icon: '🔢' },
+                { pattern: 'Input Validation', desc: 'assert!(amount > 0, E_ZERO_AMOUNT)', color: colors.chartPurple, icon: '✅' },
+              ].map((item, i) => (
+                <Box key={i} style={{
+                  background: `${item.color}10`,
+                  border: `1px solid ${item.color}30`,
+                  borderRadius: borderRadius.md,
+                  padding: '20px 28px',
+                  marginBottom: '16px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '20px',
+                }}>
+                  <Text style={{ fontSize: '28px' }}>{item.icon}</Text>
+                  <Box style={{ flex: 1 }}>
+                    <Text style={{ fontSize: '20px', fontWeight: 600, color: item.color, marginBottom: '4px' }}>{item.pattern}</Text>
+                    <Text style={{ fontSize: '17px', color: colors.textSecondary, fontFamily: item.pattern === 'Input Validation' || item.pattern === 'Access Control' ? fonts.code : undefined }}>{item.desc}</Text>
+                  </Box>
+                </Box>
+              ))}
+            </Box>
           </FlexBox>
         </Slide>
 
         {/* ==================== SLIDE 24: Testing Strategies ==================== */}
         <Slide backgroundColor="tertiary">
           <FlexBox height="100%" flexDirection="column" justifyContent="center" alignItems="center">
-            <Heading fontSize="40px" style={{ marginBottom: '32px', fontWeight: 700 }}>Testing Strategies</Heading>
-            <Box style={{ fontSize: '13px', width: '100%' }}>
+            <Heading fontSize="48px" style={{ marginBottom: '32px', fontWeight: 700 }}>Testing Strategies</Heading>
+            <Box style={{ fontSize: '14px', width: '100%', maxWidth: '950px' }}>
               <CodePane language="rust" showLineNumbers>
                 {`#[test]
-fun test_swap() {
-    let scenario = test_scenario::begin(@0x1);
+fun test_swap_x_to_y() {
+    let mut scenario = ts::begin(ADMIN);
 
-    // Setup pool
-    let pool = create_pool<SUI, USDC>(...);
+    // Setup pool with initial liquidity
+    setup_pool_with_liquidity(&mut scenario, 100_000_000, 200_000_000_000);
 
-    // Perform swap
-    let coin_out = swap_x_to_y(
-        &mut pool,
-        coin_in,
-        180, // min_out for slippage
-        ctx
-    );
+    ts::next_tx(&mut scenario, USER);
+    {
+        let mut pool = ts::take_shared<Pool<SUI, USDC>>(&scenario);
+        let ctx = ts::ctx(&mut scenario);
+        let sui_in = mint_coin<SUI>(10_000_000, ctx);
 
-    // Verify output
-    assert!(coin::value(&coin_out) >= 180, 0);
+        // Swap with slippage protection
+        let usdc_out = swap::swap_x_to_y(&mut pool, sui_in, 18_000_000_000, ctx);
+        assert!(coin::value(&usdc_out) > 18_000_000_000, 0);
 
-    test_scenario::end(scenario);
+        coin::burn_for_testing(usdc_out);
+        ts::return_shared(pool);
+    };
+    ts::end(scenario);
 }`}
               </CodePane>
             </Box>
-            <Box style={{
-              background: 'rgba(77, 162, 255, 0.1)',
-              borderRadius: borderRadius.md,
-              padding: '10px',
-              marginTop: '12px',
-            }}>
-              <Text style={{ fontSize: '13px', color: colors.textSecondary }}>
-                Test cases: Zero amounts, Large swaps, Slippage fails, Overflow
-              </Text>
-            </Box>
+            <FlexBox style={{ gap: '16px', marginTop: '24px', maxWidth: '950px', flexWrap: 'wrap', justifyContent: 'center' }}>
+              {['Zero amounts', 'Large swaps', 'Slippage fails', 'Overflow'].map((item, i) => (
+                <Box key={i} style={{
+                  background: 'rgba(77, 162, 255, 0.1)',
+                  border: '1px solid rgba(77, 162, 255, 0.3)',
+                  borderRadius: borderRadius.md,
+                  padding: '12px 20px',
+                }}>
+                  <Text style={{ fontSize: '16px', color: colors.primary, fontWeight: 500 }}>✓ {item}</Text>
+                </Box>
+              ))}
+            </FlexBox>
           </FlexBox>
         </Slide>
 
         {/* ==================== SLIDE 25: Deployment Guide ==================== */}
         <Slide backgroundColor="tertiary">
           <FlexBox height="100%" flexDirection="column" justifyContent="center" alignItems="center">
-            <Heading fontSize="40px" style={{ marginBottom: '32px', fontWeight: 700 }}>Deployment Guide</Heading>
-            <FlexBox style={{ gap: '20px' }}>
+            <Heading fontSize="48px" style={{ marginBottom: '40px', fontWeight: 700 }}>Deployment Guide</Heading>
+            <FlexBox style={{ gap: '40px', maxWidth: '1100px', width: '100%' }}>
               <Box style={{ flex: 1 }}>
-                <Text style={{ fontSize: '17px', fontWeight: 600, color: colors.primary, marginBottom: '12px' }}>
+                <Text style={{ fontSize: '22px', fontWeight: 600, color: colors.primary, marginBottom: '20px' }}>
                   Testnet Commands:
                 </Text>
-                <Box style={{ fontSize: '14px' }}>
+                <Box style={{ fontSize: '16px' }}>
                   <CodePane language="bash" showLineNumbers={false}>
-                    {`sui move build
-sui move test
+                    {`sui move build --skip-fetch-latest-git-deps
+sui move test --skip-fetch-latest-git-deps
 sui client publish --gas-budget 100000000`}
                   </CodePane>
                 </Box>
               </Box>
               <Box style={{ flex: 1 }}>
-                <Text style={{ fontSize: '17px', fontWeight: 600, color: colors.success, marginBottom: '12px' }}>
+                <Text style={{ fontSize: '22px', fontWeight: 600, color: colors.success, marginBottom: '20px' }}>
                   Mainnet Checklist:
                 </Text>
-                <Box style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                <Box style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                   {[
                     'All tests passing',
                     'Security audit completed',
@@ -1415,9 +1597,9 @@ sui client publish --gas-budget 100000000`}
                     'Monitoring & alerts setup',
                     'Emergency pause mechanism',
                   ].map((item, i) => (
-                    <FlexBox key={i} alignItems="center" style={{ gap: '8px' }}>
-                      <Text style={{ color: colors.success }}>✓</Text>
-                      <Text style={{ fontSize: '14px', color: colors.textSecondary }}>{item}</Text>
+                    <FlexBox key={i} alignItems="center" style={{ gap: '12px' }}>
+                      <Text style={{ color: colors.success, fontSize: '20px' }}>✓</Text>
+                      <Text style={{ fontSize: '18px', color: colors.textSecondary }}>{item}</Text>
                     </FlexBox>
                   ))}
                 </Box>
@@ -1429,34 +1611,35 @@ sui client publish --gas-budget 100000000`}
         {/* ==================== SLIDE 26: Q&A ==================== */}
         <Slide backgroundColor="tertiary">
           <FlexBox height="100%" flexDirection="column" justifyContent="center" alignItems="center">
-            <SuiLogo size={80} />
-            <Heading fontSize="48px" style={{
+            <SuiLogo size={100} />
+            <Heading fontSize="56px" style={{
               background: `linear-gradient(135deg, ${colors.primary}, ${colors.secondary})`,
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
-              marginTop: '20px',
-              marginBottom: '12px',
+              marginTop: '28px',
+              marginBottom: '16px',
             }}>
               Let's Build on Sui!
             </Heading>
-            <Text fontSize="22px" color="secondary" style={{ marginBottom: '24px' }}>
+            <Text fontSize="28px" color="secondary" style={{ marginBottom: '32px' }}>
               Questions?
             </Text>
             <Box style={{
               background: 'rgba(77, 162, 255, 0.1)',
               border: '1px solid rgba(77, 162, 255, 0.2)',
-              borderRadius: borderRadius.md,
-              padding: '12px 20px',
-              marginBottom: '16px',
+              borderRadius: borderRadius.lg,
+              padding: '20px 32px',
+              marginBottom: '24px',
+              textAlign: 'center',
             }}>
-              <Text style={{ fontSize: '16px', color: colors.textSecondary }}>
+              <Text style={{ fontSize: '18px', color: colors.textSecondary, marginBottom: '8px' }}>
                 Workshop Repository:
               </Text>
-              <Text style={{ fontSize: '18px', color: colors.primary, fontFamily: fonts.code }}>
+              <Text style={{ fontSize: '22px', color: colors.primary, fontFamily: fonts.code }}>
                 github.com/phamdat721101/se
               </Text>
             </Box>
-            <Text style={{ fontSize: '16px', color: colors.textMuted }}>
+            <Text style={{ fontSize: '20px', color: colors.textMuted }}>
               Oliver - Sui Developer Workshop • Hanoi
             </Text>
           </FlexBox>
