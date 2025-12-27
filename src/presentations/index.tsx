@@ -21,7 +21,7 @@ export const presentations: Presentation[] = [
     description: 'Complete workshop covering DEX concepts from AMM basics to Sui Move implementation. Interactive visualizations and code examples.',
     icon: '💱',
     tags: ['DeFi', 'Sui', 'Move', 'DEX'],
-    slideCount: 26,
+    slideCount: 27,
     presenter: 'Oliver',
     component: () => <DEXFundamentalsPresentation />,
   },
