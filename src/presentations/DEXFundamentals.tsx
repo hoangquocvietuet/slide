@@ -12,21 +12,16 @@ import {
 import { motion } from 'framer-motion';
 import { colors, fonts, borderRadius, spectacleTheme } from '../theme';
 
-// Sui Logo SVG Component
+// Sui Logo Component - uses actual logo from public folder
 function SuiLogo({ size = 48 }: { size?: number }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 32 32" fill="none">
-      <path
-        d="M16 2C8.268 2 2 8.268 2 16s6.268 14 14 14 14-6.268 14-14S23.732 2 16 2zm6.5 19.5c-1.5 2.5-4.5 4-7.5 4s-6-1.5-7.5-4c-1-1.5-1.5-3.5-1.5-5.5 0-4 2.5-7.5 6-9 .5-.5 1.5-.5 2 0 1 1 1.5 2.5 1.5 4 0 1-.5 2-1 2.5-.5.5-.5 1.5 0 2s1.5.5 2 0c1.5-1.5 2.5-3.5 2.5-6 0-1-.5-2.5-1-3.5 3.5 1.5 6 5 6 9 0 2-.5 4-1.5 5.5z"
-        fill="url(#suiGradient)"
-      />
-      <defs>
-        <linearGradient id="suiGradient" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#4DA2FF" />
-          <stop offset="1" stopColor="#6FBCF0" />
-        </linearGradient>
-      </defs>
-    </svg>
+    <img
+      src="/SUI.png"
+      alt="Sui Logo"
+      width={size}
+      height={size}
+      style={{ objectFit: 'contain' }}
+    />
   );
 }
 
@@ -1636,7 +1631,7 @@ sui client publish --gas-budget 100000000`}
                 Workshop Repository:
               </Text>
               <Text style={{ fontSize: '22px', color: colors.primary, fontFamily: fonts.code }}>
-                github.com/phamdat721101/se
+                github.com/hoangquocvietuet/slide
               </Text>
             </Box>
             <Text style={{ fontSize: '20px', color: colors.textMuted }}>
