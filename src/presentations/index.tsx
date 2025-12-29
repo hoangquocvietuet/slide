@@ -2,6 +2,7 @@ import { type ReactNode } from 'react';
 import { AMMPresentation } from './AMM';
 import { BlockchainPresentation } from './Blockchain';
 import { DEXFundamentalsPresentation } from './DEXFundamentals';
+import { SuiSDKIntegrationPresentation } from './SuiSDKIntegration';
 
 export interface Presentation {
   id: string;
@@ -15,6 +16,16 @@ export interface Presentation {
 }
 
 export const presentations: Presentation[] = [
+  {
+    id: 'sui-sdk-integration',
+    title: 'Sui SDK Integration',
+    description: 'Workshop 2: Building DApps with TypeScript SDK & Dapp Kit. Learn to query blockchain, build transactions, and integrate with React.',
+    icon: '🔌',
+    tags: ['Sui', 'TypeScript', 'SDK', 'Dapp Kit', 'React'],
+    slideCount: 22,
+    presenter: 'Oliver',
+    component: () => <SuiSDKIntegrationPresentation />,
+  },
   {
     id: 'dex-fundamentals',
     title: 'DEX Fundamentals',
