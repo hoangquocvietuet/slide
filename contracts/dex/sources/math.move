@@ -58,6 +58,9 @@ public fun calculate_swap_output(
     reserve_out: u64,
     fee_bps: u64,
 ): u64 {
+    assert!(reserve_in > 0, E_RESERVES_EMPTY);
+    assert!(reserve_out > 0, E_RESERVES_EMPTY);
+    assert!(amount_in > 0, E_ZERO_AMOUNT);
     let a : u128 = (amount_in as u128) * ((FEE_DENOMINATOR - fee_bps) as u128) * (reserve_out as u128);
     let b : u128 = (reserve_in as u128) * (FEE_DENOMINATOR as u128) + (amount_in as u128) * ((FEE_DENOMINATOR - fee_bps) as u128);
     (a / b) as u64
@@ -79,6 +82,11 @@ public fun calculate_subsequent_lp(
     reserve_y: u64,
     lp_supply: u64,
 ): u64 {
+    assert!(reserve_x > 0, E_RESERVES_EMPTY);
+    assert!(reserve_y > 0, E_RESERVES_EMPTY);
+    assert!(amount_x > 0, E_ZERO_AMOUNT);
+    assert!(amount_y > 0, E_ZERO_AMOUNT);
+    assert!(lp_supply > 0, E_ZERO_AMOUNT);
     min(
         ((amount_x as u128) * (lp_supply as u128) / (reserve_x as u128)) as u64,
         ((amount_y as u128) * (lp_supply as u128) / (reserve_y as u128)) as u64,
@@ -93,6 +101,10 @@ public fun calculate_remove_liquidity(
     reserve_x: u64,
     reserve_y: u64,
 ): (u64, u64) {
+    assert!(lp_supply > 0, E_ZERO_AMOUNT);
+    assert!(reserve_x > 0, E_RESERVES_EMPTY);
+    assert!(reserve_y > 0, E_RESERVES_EMPTY);
+    assert!(lp_amount > 0, E_ZERO_AMOUNT);
     let amount_x = ((lp_amount as u128) * (reserve_x as u128) / (lp_supply as u128)) as u64;
     let amount_y = ((lp_amount as u128) * (reserve_y as u128) / (lp_supply as u128)) as u64;
 
